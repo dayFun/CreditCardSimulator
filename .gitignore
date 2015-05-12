@@ -1,0 +1,9 @@
+bin/
+/bin/
+build/
+/build/
+.classpath
+.project
+.settings/
+.git
+
