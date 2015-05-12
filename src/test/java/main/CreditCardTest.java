@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.text.NumberFormat;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -135,9 +134,9 @@ public class CreditCardTest {
     }
 
     @Test
-    @Ignore
+    //    @Ignore
     public void testWhenBalanceIs1000AndInterestRateIs10PercentThenInterestChargeIs100() {
-        testCard.setCharge(1000.0, "Rent");
+        testCard.setCharge(1200.0, "Rent");
         testCard.setInterestCharge(10.0);
 
         String incorrectErrorMessage = createChargeLogMessageTemplate(100.0, "Interest charged.") + " declined - illegal amount.";
