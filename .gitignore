@@ -5,5 +5,5 @@ build/
 .classpath
 .project
 .settings/
-.git
-
+.git/
+.gradle/
