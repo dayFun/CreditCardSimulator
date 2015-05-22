@@ -12,19 +12,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CreditCard {
-    //GENERAL To Do: 
-    //TODO: Remove sysouts...
-    //TODO: Remove unnecessary this's
+    // GENERAL To Do:
+    // TODO: Remove sysouts...
+    // TODO: Remove unnecessary this's
 
     private double creditLimit;
     private double balance;
     private int accountNumber;
 
-    //TODO: Create logger class
+    // TODO: Create logger class
     private String actmsg; // TODO: Rename?
     private String errmsg; // TODO: Rename? Make two messages into 1?
 
-    //TODO: Move formatters into utility class?
+    // TODO: Move formatters into utility class?
     private NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
     private NumberFormat percentFormatter = NumberFormat.getPercentInstance();
 
@@ -153,7 +153,7 @@ public class CreditCard {
         }
     }
 
-    //BUG: If the Balance is equal to the credit limit, then interest is not charged...
+    // BUG: If the Balance is equal to the credit limit, then interest is not charged...
     // If only that was actually the case...
     public void setInterestCharge(double interestRate) {
         errmsg = "";
@@ -169,7 +169,7 @@ public class CreditCard {
             actmsg = "Interest rate of " + percentFormatter.format(interestRate) + " declined - illegal amount.";
             writelog(actmsg);
         } else {
-            totalInterestCharged = this.balance * interestRate / 12.00;
+            totalInterestCharged = this.balance * interestRate;
             setCharge(totalInterestCharged, "Interest charged.");
             // The writestatus() and writelog() methods will be performed in the setCharge() method
 
@@ -205,7 +205,11 @@ public class CreditCard {
 
     private void writestatus() {
         try {
-            File accountStatusLog = new File("accountLogs\\CC" + this.accountNumber + ".txt"); // TODO: Better name for file?
+            File accountStatusLog = new File("accountLogs\\CC" + this.accountNumber + ".txt"); // TODO:
+                                                                                               // Better
+                                                                                               // name
+                                                                                               // for
+                                                                                               // file?
             PrintWriter out = new PrintWriter(new FileWriter(accountStatusLog));
             out.println(this.creditLimit);
             out.println(this.balance);
@@ -221,7 +225,11 @@ public class CreditCard {
 
     private void writelog(String msg) {
         try {
-            File accountLog = new File("accountLogs\\CCL" + this.accountNumber + ".txt"); // TODO: Better name for file?
+            File accountLog = new File("accountLogs\\CCL" + this.accountNumber + ".txt"); // TODO:
+                                                                                          // Better
+                                                                                          // name
+                                                                                          // for
+                                                                                          // file?
             Calendar cal = Calendar.getInstance();
             DateFormat df = DateFormat.getDateTimeInstance();
             String ts = df.format(cal.getTime());

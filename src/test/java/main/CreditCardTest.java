@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.text.NumberFormat;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -73,7 +72,7 @@ public class CreditCardTest {
 
         String expectedErrorMessage = createChargeLogMessageTemplate(chargeAmount, chargeDescription) + " declined - illegal amount.";
 
-        //TODO: Currency formatter removes negative symbol?
+        // TODO: Currency formatter removes negative symbol?
 
         assertEquals(expectedErrorMessage, testCard.getActionMsg());
         assertEquals(expectedBalance, testCard.getBalance(), 0);
@@ -135,12 +134,25 @@ public class CreditCardTest {
     }
 
     @Test
-    @Ignore
-    public void testWhenBalanceIs1000AndInterestRateIs10PercentThenInterestChargeIs100() {
-        testCard.setCharge(1000.0, "Rent");
-        testCard.setInterestCharge(10.0);
+    public void testWhenBalanceIs500AndInterestRateIs10PercentThenInterestChargeIs50() {
+        double expectedBalance = 550.0;
+        double expectedCreditLimit = 450.0;
+        testCard.setCharge(500.0, "Rent");
 
-        String incorrectErrorMessage = createChargeLogMessageTemplate(100.0, "Interest charged.") + " declined - illegal amount.";
+        testCard.setInterestCharge(0.10);
+        String expectedMessage = createChargeLogMessageTemplate(50, "Interest charged") + " posted.";
+
+        assertEquals(expectedBalance, testCard.getBalance(), 0);
+        assertEquals(expectedCreditLimit, testCard.getAvailableCredit(), 0);
+        assertEquals(expectedMessage, testCard.getActionMsg());
+    }
+
+    @Test
+    public void testWhenCreditLimitReachedThenStillChargeInterest() {
+        testCard.setCharge(1000.0, "Rent");
+        testCard.setInterestCharge(0.10);
+
+        String incorrectErrorMessage = createChargeLogMessageTemplate(100.0, "Interest charged.") + " declined - over limit.";
 
         assertEquals(incorrectErrorMessage, testCard.getActionMsg());
     }
